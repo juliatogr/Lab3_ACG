@@ -53,7 +53,29 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		node_list.push_back(node);
 
 		// TODO: create all the volumes to use in the app
-		// ...
+
+		Volume* vol = new Volume();
+		vol->loadPVM("data/volumes/Orange.pvm");
+
+		Texture* tex = new Texture();
+
+		// Volumme, wrap option -> wrap option can be GL_CLAMP_TO_EDGE or GL_REPEAT
+		tex->create3DFromVolume(vol, GL_CLAMP_TO_EDGE);
+
+
+		SceneNode* node = new SceneNode("Test node");
+		Mesh* m = new Mesh();
+
+		m->createCube();
+
+		node->mesh = m;
+		node->model.scale(1, 1, 1);
+		StandardMaterial* mat = new StandardMaterial();
+		node->material = mat;
+
+		mat->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/normal.fs");
+		node_list.push_back(node);
+
 	}
 	
 	//hide the cursor

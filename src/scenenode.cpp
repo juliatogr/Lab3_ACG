@@ -64,3 +64,19 @@ void SceneNode::renderInMenu()
 		ImGui::TreePop();
 	}
 }
+
+//
+//VolumeNode::VolumeNode()
+//{
+//	this->name = std::string("Node" + std::to_string(lastNameId++));
+//}
+//
+//VolumeNode::VolumeNode(const char* name)
+//{
+//	this->name = name;
+//}
+//
+//VolumeNode::~VolumeNode()
+//{
+//
+//}
