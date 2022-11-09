@@ -43,14 +43,14 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 	camera->setPerspective(45.f, window_width/(float)window_height, 0.1f, 10000.f); //set the projection, we want to be perspective
 
 	{
-		// EXAMPLE OF HOW TO CREATE A SCENE NODE
-		SceneNode* node = new SceneNode("Visible node");
-		node->mesh = Mesh::Get("data/meshes/sphere.obj.mbin");
-		node->model.scale(1, 1, 1);
-		StandardMaterial* mat = new StandardMaterial();
-		node->material = mat;
-		mat->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/normal.fs");
-		node_list.push_back(node);
+		//// EXAMPLE OF HOW TO CREATE A SCENE NODE
+		//SceneNode* node = new SceneNode("Visible node");
+		//node->mesh = Mesh::Get("data/meshes/sphere.obj.mbin");
+		//node->model.scale(1, 1, 1);
+		//StandardMaterial* mat = new StandardMaterial();
+		//node->material = mat;
+		//mat->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/normal.fs");
+		//node_list.push_back(node);
 
 		// TODO: create all the volumes to use in the app
 
@@ -63,18 +63,19 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		tex->create3DFromVolume(vol, GL_CLAMP_TO_EDGE);
 
 
-		SceneNode* node = new SceneNode("Test node");
+		SceneNode* node2 = new SceneNode("Test node");
 		Mesh* m = new Mesh();
 
 		m->createCube();
 
-		node->mesh = m;
-		node->model.scale(1, 1, 1);
-		StandardMaterial* mat = new StandardMaterial();
-		node->material = mat;
+		node2->mesh = m;
+		node2->model.setScale(vol->width, vol->height, vol->depth);
+		
+		VolumeMaterial* mat2 = new VolumeMaterial();
+		node2->material = mat2;
 
-		mat->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/normal.fs");
-		node_list.push_back(node);
+		mat2->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/normal.fs");
+		node_list.push_back(node2);
 
 	}
 	
