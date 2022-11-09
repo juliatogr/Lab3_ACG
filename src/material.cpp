@@ -84,7 +84,7 @@ void WireframeMaterial::render(Mesh* mesh, Matrix44 model, Camera* camera)
 VolumeMaterial::VolumeMaterial()
 {
 	color = vec4(1.f, 1.f, 1.f, 1.f);
-	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/flat.fs");
+	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/volume.fs");
 }
 
 VolumeMaterial::~VolumeMaterial()

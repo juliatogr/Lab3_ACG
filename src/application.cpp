@@ -55,12 +55,12 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		// TODO: create all the volumes to use in the app
 
 		Volume* vol = new Volume();
-		vol->loadPVM("data/volumes/Orange.pvm");
+		vol->loadPNG("data/volumes/teapot_16_16.png");
 
 		Texture* tex = new Texture();
 
 		// Volumme, wrap option -> wrap option can be GL_CLAMP_TO_EDGE or GL_REPEAT
-		tex->create3DFromVolume(vol, GL_CLAMP_TO_EDGE);
+		tex->create3DFromVolume(vol, GL_REPEAT);
 
 
 		SceneNode* node2 = new SceneNode("Test node");
@@ -69,7 +69,11 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		m->createCube();
 
 		node2->mesh = m;
-		node2->model.setScale(vol->width, vol->height, vol->depth);
+
+
+		Vector3 scale = Vector3(vol->width, vol->height, vol->depth).normalize();
+
+		node2->model.setScale(scale.x, scale.y, scale.z);
 		
 		VolumeMaterial* mat2 = new VolumeMaterial();
 		node2->material = mat2;
