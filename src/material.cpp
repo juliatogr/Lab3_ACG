@@ -18,7 +18,8 @@ void StandardMaterial::setUniforms(Camera* camera, Matrix44 model)
 {
 
 	Matrix44 auxModel = model;
-	Vector3 localEye = auxModel.inverse() * camera->eye;
+	auxModel.inverse();
+	Vector3 localEye =  auxModel * camera->eye;
 
 	//upload node uniforms
 	shader->setUniform("u_viewprojection", camera->viewprojection_matrix);

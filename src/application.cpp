@@ -55,12 +55,12 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		// TODO: create all the volumes to use in the app
 
 		Volume* vol = new Volume();
-		vol->loadPNG("data/volumes/teapot_16_16.png");
+		vol->loadPNG("data/volumes/teapot_16_16.png", 16 ,16);
 
 		Texture* tex = new Texture();
 
-		// Volumme, wrap option -> wrap option can be GL_CLAMP_TO_EDGE or GL_REPEAT
-		tex->create3DFromVolume(vol, GL_REPEAT);
+		// Volume, wrap option -> wrap option can be GL_CLAMP_TO_EDGE or GL_REPEAT
+		tex->create3DFromVolume(vol, GL_CLAMP_TO_EDGE);
 
 
 		SceneNode* node2 = new SceneNode("Test node");
@@ -77,8 +77,6 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		
 		VolumeMaterial* mat2 = new VolumeMaterial();
 		node2->material = mat2;
-
-		mat2->shader = Shader::Get("data/shaders/basic.vs", "data/shaders/normal.fs");
 		node_list.push_back(node2);
 
 	}

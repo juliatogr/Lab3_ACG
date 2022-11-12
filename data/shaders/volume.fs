@@ -11,10 +11,10 @@ void main()
 {
 
 	//Ray Setup
-	vec3 ray_dir = normalize(u_camera_position - v_position);
+	vec3 ray_dir = normalize(v_position - u_camera_position);
 
-	float stepLength = 0.02;
-	vec4 finalColor = vec4(0.0,0.0,0.0,0.0);
+	float stepLength = 0.002;
+	vec4 finalColor = vec4(0.0);
 	vec3 sample_pos = v_position;
 
 	for (int i = 0; i < 1000; i++){
@@ -26,22 +26,24 @@ void main()
 
 		//classification
 
-		vec4 sampleColor = vec4(d,d,d,d);
+		vec4 sampleColor = vec4(d,1-d,0,d*d);
+		sampleColor.rgb *= sampleColor.a;
 
 		// Composition
 		finalColor += stepLength * (1.0 - finalColor.a) * sampleColor;
 
 		//Next sample & early termination
 
-		sample_pos += stepLength;
+		sample_pos += stepLength * ray_dir;
 
 		if (sample_pos.x > 1.0 || sample_pos.x < -1.0 || sample_pos.y > 1.0 || sample_pos.y < -1.0 || sample_pos.y > 1.0 || sample_pos.y < -1.0){
 			break;
 		}
-
+		
 		if (finalColor.a >= 1.0) {
 			break;
 		}
+
 	}
 
 
