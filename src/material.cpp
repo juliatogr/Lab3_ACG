@@ -23,7 +23,7 @@ void StandardMaterial::setUniforms(Camera* camera, Matrix44 model)
 
 	//upload node uniforms
 	shader->setUniform("u_viewprojection", camera->viewprojection_matrix);
-	shader->setUniform("u_camera_position", localEye);
+	shader->setUniform("u_camera_pos", localEye);
 	shader->setUniform("u_model", model);
 	shader->setUniform("u_time", Application::instance->time);
 	shader->setUniform("u_color", color);
@@ -101,7 +101,7 @@ void VolumeMaterial::render(Mesh* mesh, Matrix44 model, Camera* camera)
 {
 	if (shader && mesh)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		//enable shader
 		shader->enable();

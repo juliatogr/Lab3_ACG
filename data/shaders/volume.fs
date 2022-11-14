@@ -4,14 +4,14 @@ varying vec3 v_normal;
 varying vec2 v_uv;
 varying vec4 v_color;
 
-uniform vec3 u_camera_position;
+uniform vec3 u_camera_pos;
 uniform sampler3D u_texture;
 
 void main()
 {
 
 	//Ray Setup
-	vec3 ray_dir = normalize(v_position - u_camera_position);
+	vec3 ray_dir = normalize(v_position - u_camera_pos);
 
 	float stepLength = 0.002;
 	vec4 finalColor = vec4(0.0);
@@ -26,7 +26,8 @@ void main()
 
 		//classification
 
-		vec4 sampleColor = vec4(d,1-d,0,d*d);
+		vec4 sampleColor = vec4(d,d,d,d);
+
 		sampleColor.rgb *= sampleColor.a;
 
 		// Composition
@@ -43,10 +44,12 @@ void main()
 		if (finalColor.a >= 1.0) {
 			break;
 		}
-
 	}
 
-
-
+	
 	gl_FragColor = finalColor;
+
+	
+
+	
 }
