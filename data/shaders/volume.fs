@@ -13,7 +13,7 @@ void main()
 	//Ray Setup
 	vec3 ray_dir = normalize(v_position - u_camera_pos);
 
-	float stepLength = 0.002;
+	float stepLength = 0.001;
 	vec4 finalColor = vec4(0.0);
 	vec3 sample_pos = v_position;
 
@@ -44,12 +44,17 @@ void main()
 		if (finalColor.a >= 1.0) {
 			break;
 		}
+		//float brightness = 0.2;
+		//finalColor.x *= brightness; 
+		//finalColor.y *= brightness; 
+		//finalColor.z *= brightness; 
 	}
 
-	
-	gl_FragColor = finalColor;
+	if (finalColor.a <= 0.01){
+		discard;
+	} else {
+		gl_FragColor = finalColor;
+	}
 
-	
 
-	
 }

@@ -56,6 +56,8 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 
 		// Import volume
 		Volume* vol = new Volume();
+		//vol->loadPVM("data/volumes/orange.pvm");
+		//vol->loadPVM("data/volumes/CT-Abdomen.pvm");
 		vol->loadPNG("data/volumes/teapot_16_16.png", 16, 16);
 
 		// Create node
