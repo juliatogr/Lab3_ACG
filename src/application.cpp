@@ -56,35 +56,34 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 
 		// Import volume
 		Volume* vol = new Volume();
+		//vol->loadPNG("data/volumes/teapot_16_16.png", 16, 16);
 		//vol->loadPVM("data/volumes/orange.pvm");
-		//vol->loadPVM("data/volumes/CT-Abdomen.pvm");
-		vol->loadPNG("data/volumes/teapot_16_16.png", 16, 16);
+		vol->loadPVM("data/volumes/CT-Abdomen.pvm");
+		//vol->loadPNG("data/volumes/bonsai_16_16.png", 16, 16);
+
+		// Create texture
+		Texture* tex = new Texture();
+		tex->create3DFromVolume(vol, GL_CLAMP_TO_EDGE);
+		
+		// Create mesh
+		Mesh* m = new Mesh();
+		m->createCube();
+		
+		// Create material
+		VolumeMaterial* mat2 = new VolumeMaterial();
+		mat2->texture = tex;
 
 		// Create node
 		SceneNode* node2 = new SceneNode("Test node");
 
-		// Setting mesh
-		Mesh* m = new Mesh();
-		m->createCube();
 		node2->mesh = m;
 
-		// Setting scale
-		Vector3 scale = Vector3(vol->width, vol->height, vol->depth).normalize();
-		node2->model.setScale(scale.x, scale.y, scale.z);
-
-		// Setting material
-
-		VolumeMaterial* mat2 = new VolumeMaterial();
-
-		Texture* tex = new Texture();
-		// Volume, wrap option -> wrap option can be GL_CLAMP_TO_EDGE or GL_REPEAT
-		tex->create3DFromVolume(vol, GL_CLAMP_TO_EDGE);
-		mat2->texture = tex;
+		float div = vol->width * vol->widthSpacing;
+		node2->model.setScale(1, vol->height * vol->heightSpacing / div, vol->depth * vol->depthSpacing / div);
 
 		node2->material = mat2;
 
 		node_list.push_back(node2);
-
 	}
 	
 	//hide the cursor

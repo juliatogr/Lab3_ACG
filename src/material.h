@@ -13,6 +13,8 @@ public:
 	Shader* shader = NULL;
 	Texture* texture = NULL;
 	vec4 color;
+	float brightness;
+	float stepLength;
 
 	virtual void setUniforms(Camera* camera, Matrix44 model) = 0;
 	virtual void render(Mesh* mesh, Matrix44 model, Camera * camera) = 0;
@@ -43,11 +45,13 @@ public:
 
 class VolumeMaterial : public StandardMaterial {
 public:
-
+	
 	VolumeMaterial();
 	~VolumeMaterial();
 
 	void render(Mesh* mesh, Matrix44 model, Camera* camera);
+	//void setUniforms(Camera* camera, Matrix44 model);
+	//void renderInMenu();
 };
 
 #endif
