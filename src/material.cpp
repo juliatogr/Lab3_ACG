@@ -126,30 +126,23 @@ void VolumeMaterial::render(Mesh* mesh, Matrix44 model, Camera* camera)
 	}
 }
 
-//void VolumeMaterial::setUniforms(Camera* camera, Matrix44 model)
-//{
-//
-//	Matrix44 auxModel = model;
-//	auxModel.inverse();
-//	Vector3 localEye = auxModel * camera->eye;
-//
-//	//upload node uniforms
-//	shader->setUniform("u_viewprojection", camera->viewprojection_matrix);
-//	shader->setUniform("u_camera_pos", localEye);
-//	shader->setUniform("u_model", model);
-//	shader->setUniform("u_time", Application::instance->time);
-//	shader->setUniform("u_color", color);
-//	shader->setUniform("u_brightness", brightness);
-//	shader->setUniform("u_steplength", stepLength);
-//
-//	if (texture)
-//		shader->setUniform("u_texture", texture);
-//
-//}
-//
-//void VolumeMaterial::renderInMenu()
-//{
-//	ImGui::ColorEdit3("Color", (float*)&this->color); // Edit 3 floats representing a color
-//	ImGui::SliderFloat("Brightness", (float*)&brightness, 0, 10);
-//	ImGui::SliderFloat("StepLength", (float*)&stepLength, 0.01, 0.1);
-//}
+void VolumeMaterial::setUniforms(Camera* camera, Matrix44 model)
+{
+	Matrix44 auxModel = model;
+	auxModel.inverse();
+	Vector3 localEye = auxModel * camera->eye;
+
+	//upload node uniforms
+	shader->setUniform("u_viewprojection", camera->viewprojection_matrix);
+	shader->setUniform("u_camera_pos", localEye);
+	shader->setUniform("u_model", model);
+	shader->setUniform("u_time", Application::instance->time);
+	shader->setUniform("u_color", color);
+	shader->setUniform("u_brightness", brightness);
+	shader->setUniform("u_steplength", stepLength);
+	shader->setUniform("u_noise", noise);
+	shader->setUniform("u_noisewidth", noise->width);
+
+	if (texture)
+		shader->setUniform("u_texture", texture);
+}

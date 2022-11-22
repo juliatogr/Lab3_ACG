@@ -58,8 +58,9 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		Volume* vol = new Volume();
 		//vol->loadPNG("data/volumes/teapot_16_16.png", 16, 16);
 		//vol->loadPVM("data/volumes/orange.pvm");
-		vol->loadPVM("data/volumes/CT-Abdomen.pvm");
+		//vol->loadPVM("data/volumes/CT-Abdomen.pvm");
 		//vol->loadPNG("data/volumes/bonsai_16_16.png", 16, 16);
+		vol->loadPNG("data/volumes/foot_16_16.png", 16, 16);
 
 		// Create texture
 		Texture* tex = new Texture();
@@ -72,6 +73,9 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		// Create material
 		VolumeMaterial* mat2 = new VolumeMaterial();
 		mat2->texture = tex;
+		Image* noise = new Image();
+		noise->loadPNG("data/images/blueNoise.png");
+		mat2->noise = new Texture(noise);
 
 		// Create node
 		SceneNode* node2 = new SceneNode("Test node");
@@ -84,6 +88,8 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		node2->material = mat2;
 
 		node_list.push_back(node2);
+
+		
 	}
 	
 	//hide the cursor

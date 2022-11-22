@@ -45,13 +45,13 @@ public:
 
 class VolumeMaterial : public StandardMaterial {
 public:
+	Texture* noise;
 	
 	VolumeMaterial();
 	~VolumeMaterial();
 
 	void render(Mesh* mesh, Matrix44 model, Camera* camera);
-	//void setUniforms(Camera* camera, Matrix44 model);
-	//void renderInMenu();
+	void setUniforms(Camera* camera, Matrix44 model);
 };
 
 #endif
