@@ -103,6 +103,15 @@ VolumeMaterial::~VolumeMaterial()
 
 }
 
+void VolumeMaterial::renderInMenu()
+{
+	ImGui::ColorEdit3("Color", (float*)&color); // Edit 3 floats representing a color
+	ImGui::SliderFloat("Brightness", (float*)&brightness, 0, 10);
+	ImGui::SliderFloat("StepLength", (float*)&stepLength, 0.01, 0.1);
+	ImGui::Checkbox("use Jittering", (bool*)&useJittering);
+	ImGui::Checkbox("use TF", (bool*)&useTransfer);
+}
+
 void VolumeMaterial::render(Mesh* mesh, Matrix44 model, Camera* camera)
 {
 	if (shader && mesh)
@@ -142,6 +151,9 @@ void VolumeMaterial::setUniforms(Camera* camera, Matrix44 model)
 	shader->setUniform("u_steplength", stepLength);
 	shader->setUniform("u_noise", noise);
 	shader->setUniform("u_noisewidth", noise->width);
+	shader->setUniform("u_usetransfer", useTransfer);
+	shader->setUniform("u_usejittering", useJittering);
+	shader->setUniform("u_tf", tf);
 
 	if (texture)
 		shader->setUniform("u_texture", texture);

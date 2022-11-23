@@ -11,6 +11,9 @@ uniform int u_noisewidth;
 uniform float u_brightness;
 uniform float u_steplength;
 uniform vec4 u_color;
+uniform sampler2D u_tf;
+uniform bool u_usetransfer;
+uniform bool u_usejittering;
 
 
 float rand(vec2 co){
@@ -24,15 +27,18 @@ void main()
 	vec3 ray_dir = normalize(v_position - u_camera_pos);
 	vec4 finalColor = vec4(0.0);
 
-	vec2 noise_pos = gl_FragCoord.xy / u_noisewidth;
-	float offset = texture(u_noise, noise_pos).x; //first approach
-	//float offset = rand(gl_FragColor.xy);		 // second approach
-	vec3 sample_pos = v_position + u_steplength*ray_dir*offset;
+	vec3 sample_pos;
+
+	if (u_usejittering){
+		vec2 noise_pos = gl_FragCoord.xy / 128;
+		float offset = texture(u_noise, noise_pos).x; //first approach
+		//float offset = rand(gl_FragColor.xy);		 // second approach
+		sample_pos = v_position + u_steplength*ray_dir*offset;
+	} else {
+		sample_pos = v_position;
+	}
 
 	for (int i = 0; i < 10000; i++){
-
-		
-
 		
 		// volume sampling
 		vec3 text_coord = (sample_pos + 1) /2;
@@ -40,17 +46,30 @@ void main()
 
 		//classification
 
-		vec4 sampleColor;
+		
+        vec4 sampleColor;
+		
+		if (u_usetransfer && d > 0.1){
 
-		sampleColor = vec4(d, d, d, d);
+			if (d < 0.3){
+				sampleColor = texture(u_tf, vec2(0.2,0));
+			} else if (d < 0.4){
+				sampleColor = texture(u_tf, vec2(0.5,0));
+			} else{
+				sampleColor = texture(u_tf, vec2(0.8,0));
+			}
+		} else {
+			sampleColor = vec4(d, d, d, d);
+			sampleColor.rgb *= u_color.rgb;
+		}
+		
 		sampleColor.rgb *= sampleColor.a;
-		sampleColor.rgb *= u_color.rgb;
+		
 		sampleColor.rgb *= u_brightness;
 
 
 		// Composition
 		finalColor += u_steplength * (1.0 - finalColor.a) * sampleColor;
-		 
 
 		//Next sample & early termination
 

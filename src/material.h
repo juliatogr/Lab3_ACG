@@ -46,12 +46,16 @@ public:
 class VolumeMaterial : public StandardMaterial {
 public:
 	Texture* noise;
+	Texture* tf;
+	bool useTransfer = false;
+	bool useJittering = true;
 	
 	VolumeMaterial();
 	~VolumeMaterial();
 
 	void render(Mesh* mesh, Matrix44 model, Camera* camera);
 	void setUniforms(Camera* camera, Matrix44 model);
+	void renderInMenu();
 };
 
 #endif
