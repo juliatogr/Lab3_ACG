@@ -33,8 +33,8 @@ void main()
 
 	if (u_usejittering){
 		vec2 noise_pos = gl_FragCoord.xy / 128;
-		float offset = texture(u_noise, noise_pos).x; //first approach
-		//float offset = rand(gl_FragColor.xy);		 // second approach
+		//float offset = texture(u_noise, noise_pos).x; //first approach
+		float offset = rand(gl_FragCoord.xy);		 // second approach
 		sample_pos = v_position + u_steplength*ray_dir*offset;
 	} else {
 		sample_pos = v_position;
