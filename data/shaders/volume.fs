@@ -24,11 +24,10 @@ void main()
 	vec3 ray_dir = normalize(v_position - u_camera_pos);
 	vec4 finalColor = vec4(0.0);
 
-	//vec2 noise_pos = gl_FragCoord.xy / u_noisewidth;
-	//float offset = texture(u_noise, noise_pos).x; //first approach
+	vec2 noise_pos = gl_FragCoord.xy / u_noisewidth;
+	float offset = texture(u_noise, noise_pos).x; //first approach
 	//float offset = rand(gl_FragColor.xy);		 // second approach
-	vec3 sample_pos = v_position;
-	//sample_pos.x += offset;
+	vec3 sample_pos = v_position + u_steplength*ray_dir*offset;
 
 	for (int i = 0; i < 10000; i++){
 
