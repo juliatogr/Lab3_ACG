@@ -14,6 +14,8 @@ uniform vec4 u_color;
 uniform sampler2D u_tf;
 uniform bool u_usetransfer;
 uniform bool u_usejittering;
+uniform bool u_useclipping;
+uniform vec4 u_plane;
 
 
 float rand(vec2 co){
@@ -46,26 +48,29 @@ void main()
 
 		//classification
 
-		
-        vec4 sampleColor;
-		
-		if (u_usetransfer && d > 0.1){
+		vec4 sampleColor;
 
-			if (d < 0.3){
-				sampleColor = texture(u_tf, vec2(0.2,0));
-			} else if (d < 0.4){
-				sampleColor = texture(u_tf, vec2(0.5,0));
-			} else{
-				sampleColor = texture(u_tf, vec2(0.8,0));
-			}
+		if (u_useclipping && u_plane.x*sample_pos.x + u_plane.y*sample_pos.y + u_plane.z*sample_pos.z + u_plane.a > 0){
+			sampleColor = vec4(0);
 		} else {
-			sampleColor = vec4(d, d, d, d);
-			sampleColor.rgb *= u_color.rgb;
+			if (u_usetransfer && d > 0.1){
+
+				if (d < 0.3){
+					sampleColor = texture(u_tf, vec2(0.2,0));
+				} else if (d < 0.4){
+					sampleColor = texture(u_tf, vec2(0.5,0));
+				} else{
+					sampleColor = texture(u_tf, vec2(0.8,0));
+				}
+			} else {
+				sampleColor = vec4(d, d, d, d);
+				sampleColor.rgb *= u_color.rgb;
+			}
+		
+			sampleColor.rgb *= sampleColor.a;
+		
+			sampleColor.rgb *= u_brightness;
 		}
-		
-		sampleColor.rgb *= sampleColor.a;
-		
-		sampleColor.rgb *= u_brightness;
 
 
 		// Composition

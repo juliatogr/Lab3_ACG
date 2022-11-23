@@ -49,6 +49,8 @@ public:
 	Texture* tf;
 	bool useTransfer = false;
 	bool useJittering = true;
+	bool useClipping = true;
+	Vector4 plane;
 	
 	VolumeMaterial();
 	~VolumeMaterial();

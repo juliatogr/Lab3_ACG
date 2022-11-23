@@ -70,6 +70,8 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		Mesh* m = new Mesh();
 		m->createCube();
 		
+		
+
 		// Create material
 		VolumeMaterial* mat2 = new VolumeMaterial();
 		mat2->texture = tex;
@@ -77,6 +79,8 @@ Application::Application(int window_width, int window_height, SDL_Window* window
 		mat2->noise = Texture::Get("data/images/blueNoise.png");
 		mat2->tf = Texture::Get("data/images/abdomen_tf.png");
 
+		Vector4 pl(0, 30 , 0, -17);
+		mat2->plane = pl;
 		// Create node
 		SceneNode* node2 = new SceneNode("Test node");
 

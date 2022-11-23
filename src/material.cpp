@@ -110,6 +110,7 @@ void VolumeMaterial::renderInMenu()
 	ImGui::SliderFloat("StepLength", (float*)&stepLength, 0.01, 0.1);
 	ImGui::Checkbox("use Jittering", (bool*)&useJittering);
 	ImGui::Checkbox("use TF", (bool*)&useTransfer);
+	ImGui::Checkbox("use Clipping", (bool*)&useClipping);
 }
 
 void VolumeMaterial::render(Mesh* mesh, Matrix44 model, Camera* camera)
@@ -153,7 +154,9 @@ void VolumeMaterial::setUniforms(Camera* camera, Matrix44 model)
 	shader->setUniform("u_noisewidth", noise->width);
 	shader->setUniform("u_usetransfer", useTransfer);
 	shader->setUniform("u_usejittering", useJittering);
+	shader->setUniform("u_useclipping", useClipping);
 	shader->setUniform("u_tf", tf);
+	shader->setUniform("u_plane", plane);
 
 	if (texture)
 		shader->setUniform("u_texture", texture);
